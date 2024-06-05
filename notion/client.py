@@ -49,6 +49,15 @@ class Client(BaseClient, Database, Page):
             if isinstance(coin, list):
                 coin = coin[0]
 
+            if coin['tags']:
+                coin_tags = [{"name": i} for i in coin['tags']]
+            else:
+                coin_tags = [
+                    {
+                        "name": "No data"
+                    },
+                ]
+
             clean_data[symbol] = {
                 'website': {
                     'rich_text': [{
@@ -128,9 +137,7 @@ class Client(BaseClient, Database, Page):
                     }]
                 },
                 'tags': {
-                    'multi_select': [{
-                        "name": i
-                    } for i in coin['tags']]
+                    'multi_select': coin_tags
                 },
                 'platform': {
                     'rich_text': [{
