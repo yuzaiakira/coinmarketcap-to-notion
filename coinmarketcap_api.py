@@ -2,6 +2,13 @@ from requests import Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import json
 
+class CoinmarketcapInvalidSymbol(Exception):
+  def __init__(self, symbol):
+      self.symbol = symbol
+
+  def __str__(self):
+      return(repr(self.symbol))
+
 
 class CoinMarketCap:
 
@@ -21,9 +28,18 @@ class CoinMarketCap:
     try:
       response = session.get(self.URL, params=self.PARAMETERS)
       data = json.loads(response.text)
-      return data
+      
+      if response.status_code == 200:
+        return data
+      else:
+        raise CoinmarketcapInvalidSymbol(data['status']['error_message'])
+
     except (ConnectionError, Timeout, TooManyRedirects) as e:
       raise e
+      
+    except CoinmarketcapInvalidSymbol as e:
+      print(e)
+      exit()
 
   def clean_coins(self):
     data = self.DATA['data']
