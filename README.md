@@ -33,12 +33,11 @@ cd ./coinmarketcap-to-notion/
 6. ### Set Up Your Environment
    1. Rename a `sample.env` file to `.env` file in the root of your project.
    2. Fill the following lines to the .env file:
-      ```plaintext
+```plaintext
 I_TOKEN= Notion Integration Token
 DATABASE_ID= Notion Database ID
-
 COINMARKETCAP_KEY= CoinMarketCap API Key
-      ```
+```
 6. ### Install the Required Libraries
 You can install the required libraries using pip:
 ```bash
